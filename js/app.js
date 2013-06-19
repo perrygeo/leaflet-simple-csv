@@ -55,6 +55,7 @@ var addCsvMarkers = function() {
 
     markers = new L.MarkerClusterGroup(clusterOptions);
     points.addData(dataCsv);
+    points.bindLabel("How does this work with multiple markers without looping??");
     markers.addLayer(points);
 
     map.addLayer(markers);
