@@ -53,7 +53,7 @@ var addCsvMarkers = function() {
     map.removeLayer(markers);
     points.clearLayers();
 
-    markers = new L.MarkerClusterGroup();
+    markers = new L.MarkerClusterGroup(clusterOptions);
     points.addData(dataCsv);
     markers.addLayer(points);
 
@@ -92,11 +92,6 @@ function populateTypeAhead(csv, delimiter) {
             typeAheadSource.push(items[j]);
         }
     }
-}
-
-function getTypeAheadSource(query, callback) {
-    console.log("Got it", query, callback);
-    return typeAheadSource;
 }
 
 map.addLayer(markers);
