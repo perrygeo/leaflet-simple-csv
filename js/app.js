@@ -11,7 +11,10 @@ var points = L.geoCsv (null, {
         var popup = '<table class="table table-striped table-bordered table-condensed">';
         for (var clave in feature.properties) {
             var title = points.getPropertyTitle(clave);
-            popup += '<tr><th>'+title+'</th><td>'+feature.properties[clave]+'</td></tr>';
+            var attr = feature.properties[clave];
+            if (attr) {
+                popup += '<tr><th>'+title+'</th><td>'+feature.properties[clave]+'</td></tr>';
+            }
         }
         popup += "</table>";
         layer.bindPopup(popup);
@@ -29,7 +32,7 @@ var points = L.geoCsv (null, {
             if (value.indexOf(lowerFilterString) !== -1) {
                 hit = true;
                 hits += 1;
-                return false; 
+                return false;
             }
         });
         return hit;
@@ -78,8 +81,41 @@ $.ajax ({
     },
     success: function(csv) {
         dataCsv = csv;
+        populateTypeAhead(csv, fieldSeparator);
+        typeAheadSource = ArrayToSet(typeAheadSource);
         addCsvMarkers();
     }
 });
 
+var typeAheadSource = [];
+
+function ArrayToSet(a) {
+    var temp = {};
+    for (var i = 0; i < a.length; i++)
+        temp[a[i]] = true;
+    var r = [];
+    for (var k in temp)
+        r.push(k);
+    return r;
+}
+
+function populateTypeAhead(csv, delimiter) {
+    var lines = csv.split("\n");
+    for (var i = lines.length - 1; i >= 1; i--) {
+        var items = lines[i].split(delimiter);
+        for (var j = items.length - 1; j >= 0; j--) {
+            typeAheadSource.push(items[j]);
+        }
+    }
+}
+
+function getTypeAheadSource(query, callback) {
+    console.log("Got it", query, callback);
+    return typeAheadSource;
+}
+
 map.addLayer(markers);
+
+$(document).ready( function() {
+    $('#filter-string').typeahead({source: typeAheadSource});
+});
