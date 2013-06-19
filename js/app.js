@@ -1,0 +1,85 @@
+var basemap = new L.TileLayer(baseUrl, {maxZoom: 17, attribution: baseAttribution, subdomains: subdomains});
+
+var center = new L.LatLng(0, 0);
+
+var map = new L.Map('map', {center: center, zoom: 2, maxZoom: maxZoom, layers: [basemap]});
+
+var points = L.geoCsv (null, {
+    firstLineTitles: true,
+    fieldSeparator: fieldSeparator,
+    onEachFeature: function (feature, layer) {
+        var popup = '<table class="table table-striped table-bordered table-condensed">';
+        for (var clave in feature.properties) {
+            var title = points.getPropertyTitle(clave);
+            popup += '<tr><th>'+title+'</th><td>'+feature.properties[clave]+'</td></tr>';
+        }
+        popup += "</table>";
+        layer.bindPopup(popup);
+    },
+    filter: function(feature, layer) {
+        total += 1;
+        if (!filterString) {
+            hits += 1;
+            return true;
+        }
+        var hit = false;
+        var lowerFilterString = filterString.toLowerCase();
+        $.each(feature.properties, function(k, v) {
+            var value = v.toLowerCase();
+            if (value.indexOf(lowerFilterString) !== -1) {
+                hit = true;
+                hits += 1;
+                return false; 
+            }
+        });
+        return hit;
+    }
+});
+
+var hits = 0;
+var total = 0;
+var filterString;
+var markers = new L.MarkerClusterGroup();
+var dataCsv;
+
+var addCsvMarkers = function() {
+    hits = 0;
+    total = 0;
+    filterString = document.getElementById('filter-string').value;
+
+    map.removeLayer(markers);
+    points.clearLayers();
+
+    markers = new L.MarkerClusterGroup();
+    points.addData(dataCsv);
+    markers.addLayer(points);
+
+    map.addLayer(markers);
+    try {
+        var bounds = markers.getBounds();
+        if (bounds) {
+            map.fitBounds(bounds);
+        }
+    } catch(err) {
+        // pass
+    }
+    if (total > 0) {
+        $('#search-results').html("Showing " + hits + " of " + total);
+    }
+    return false;
+};
+
+$.ajax ({
+    type:'GET',
+    dataType:'text',
+    url: dataUrl,
+    error: function() {
+        alert('Error retrieving csv file');
+    },
+    success: function(csv) {
+        dataCsv = csv;
+        addCsvMarkers();
+    }
+});
+
+map.addLayer(markers);
