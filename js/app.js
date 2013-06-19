@@ -72,21 +72,6 @@ var addCsvMarkers = function() {
     return false;
 };
 
-$.ajax ({
-    type:'GET',
-    dataType:'text',
-    url: dataUrl,
-    error: function() {
-        alert('Error retrieving csv file');
-    },
-    success: function(csv) {
-        dataCsv = csv;
-        populateTypeAhead(csv, fieldSeparator);
-        typeAheadSource = ArrayToSet(typeAheadSource);
-        addCsvMarkers();
-    }
-});
-
 var typeAheadSource = [];
 
 function ArrayToSet(a) {
@@ -117,5 +102,20 @@ function getTypeAheadSource(query, callback) {
 map.addLayer(markers);
 
 $(document).ready( function() {
-    $('#filter-string').typeahead({source: typeAheadSource});
+    $.ajax ({
+        type:'GET',
+        dataType:'text',
+        url: dataUrl,
+        error: function() {
+            alert('Error retrieving csv file');
+        },
+        success: function(csv) {
+            dataCsv = csv;
+            populateTypeAhead(csv, fieldSeparator);
+            typeAheadSource = ArrayToSet(typeAheadSource);
+            $('#filter-string').typeahead({source: typeAheadSource});
+            addCsvMarkers();
+        }
+    });
+
 });
