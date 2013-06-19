@@ -12,6 +12,9 @@ var points = L.geoCsv (null, {
         for (var clave in feature.properties) {
             var title = points.getPropertyTitle(clave).strip();
             var attr = feature.properties[clave];
+            if (title == labelColumn) {
+                layer.bindLabel(feature.properties[clave], {className: 'map-label'});
+            }
             if (attr.indexOf('http') === 0) {
                 attr = '<a href="' + attr + '">'+ attr + '</a>';
             }
@@ -58,7 +61,6 @@ var addCsvMarkers = function() {
 
     markers = new L.MarkerClusterGroup(clusterOptions);
     points.addData(dataCsv);
-    points.bindLabel("How does this work with multiple markers without looping??");
     markers.addLayer(points);
 
     map.addLayer(markers);

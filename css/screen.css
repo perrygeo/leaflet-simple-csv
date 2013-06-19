@@ -31,3 +31,7 @@ form {
     height: 250px;
     overflow-y: scroll;
 }
+
+.map-label {
+    z-index: 9000638;
+}
