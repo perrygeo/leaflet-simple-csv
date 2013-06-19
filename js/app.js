@@ -96,7 +96,7 @@ function populateTypeAhead(csv, delimiter) {
         var items = lines[i].split(delimiter);
         for (var j = items.length - 1; j >= 0; j--) {
             var item = items[j].strip();
-            item = item.replace('"','');
+            item = item.replace(/"/g,'');
             if (item.indexOf("http") !== 0 && isNaN(parseFloat(item))) {
                 typeAheadSource.push(item);
                 var words = item.split(/\W+/);
