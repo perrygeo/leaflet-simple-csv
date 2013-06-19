@@ -12,7 +12,7 @@ Simple Leaflet map template for putting points on a map.
 * All dependencies included or linked via CDN
 
 ### Usage
-Download, add your own data csv, edit the `config.js` and load index.html in a browser.
+Download, add your own data csv, copy the `config.js.template` to `config.js`, edit it according to your needs, then load index.html in a browser.
 
 ### Thanks to...
 
