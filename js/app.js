@@ -92,7 +92,7 @@ function populateTypeAhead(csv, delimiter) {
     for (var i = lines.length - 1; i >= 1; i--) {
         var items = lines[i].split(delimiter);
         for (var j = items.length - 1; j >= 0; j--) {
-            item = items[j].strip();
+            var item = items[j].strip();
             item = item.replace('"','');
             if (item.indexOf("http") !== 0 && isNaN(parseFloat(item))) {
                 typeAheadSource.push(item);
