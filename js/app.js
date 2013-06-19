@@ -8,15 +8,18 @@ var points = L.geoCsv (null, {
     firstLineTitles: true,
     fieldSeparator: fieldSeparator,
     onEachFeature: function (feature, layer) {
-        var popup = '<table class="table table-striped table-bordered table-condensed">';
+        var popup = '<div class="popup-content"><table class="table table-striped table-bordered table-condensed">';
         for (var clave in feature.properties) {
-            var title = points.getPropertyTitle(clave);
+            var title = points.getPropertyTitle(clave).strip();
             var attr = feature.properties[clave];
+            if (attr.indexOf('http') === 0) {
+                attr = '<a href="' + attr + '">'+ attr + '</a>';
+            }
             if (attr) {
-                popup += '<tr><th>'+title+'</th><td>'+feature.properties[clave]+'</td></tr>';
+                popup += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
             }
         }
-        popup += "</table>";
+        popup += "</table></popup-content>";
         layer.bindPopup(popup);
     },
     filter: function(feature, layer) {
@@ -26,7 +29,7 @@ var points = L.geoCsv (null, {
             return true;
         }
         var hit = false;
-        var lowerFilterString = filterString.toLowerCase();
+        var lowerFilterString = filterString.toLowerCase().strip();
         $.each(feature.properties, function(k, v) {
             var value = v.toLowerCase();
             if (value.indexOf(lowerFilterString) !== -1) {
@@ -89,9 +92,23 @@ function populateTypeAhead(csv, delimiter) {
     for (var i = lines.length - 1; i >= 1; i--) {
         var items = lines[i].split(delimiter);
         for (var j = items.length - 1; j >= 0; j--) {
-            typeAheadSource.push(items[j]);
+            item = items[j].strip();
+            item = item.replace('"','');
+            if (item.indexOf("http") !== 0 && isNaN(parseFloat(item))) {
+                typeAheadSource.push(item);
+                var words = item.split(/\W+/);
+                for (var k = words.length - 1; k >= 0; k--) {
+                    typeAheadSource.push(words[k]);
+                }
+            }
         }
     }
+}
+
+if(typeof(String.prototype.strip) === "undefined") {
+    String.prototype.strip = function() {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
 }
 
 map.addLayer(markers);
