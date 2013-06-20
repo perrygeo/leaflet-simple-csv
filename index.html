@@ -20,10 +20,10 @@
     <div id="map"></div>
     <div id="filter-container">
         <form class="form-search" class="noSelect" onSubmit="addCsvMarkers(); return false;">
-            <a href="#" id="clear"><i class="icon-remove"></i></a>
+            <a href="#" id="clear" class="leaflet-popup-close-button">&#215;</a>
             <div class="input-append">
-                <input type="text" id="filter-string" class="input-medium search-query" autocomplete="off">
-                <button type="submit" class="btn"><i class="icon-search"></i></button>
+                <input type="text" id="filter-string" class="input-medium search-query search-box" autocomplete="off">
+                <button type="submit" class="btn search-box"><i class="icon-search"></i></button>
                 <!-- <span class="add-on">
                 </span> -->
             </div>

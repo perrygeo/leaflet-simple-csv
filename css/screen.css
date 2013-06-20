@@ -39,11 +39,20 @@ form {
 #clear {
     display: inline-block;
     position: relative;
-    right: -28px;
+    right: -24px;
     z-index: 999999;
-    top: 1px;
+    top: 3px;
+    font-size:14pt;
+    text-decoration: none;
+    color: #aaa;
 }
 
 input.search-query {
-    padding-left: 28px;
+    padding-left: 24px;
+}
+
+.search-box {
+    font-size: 10pt !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
 }
