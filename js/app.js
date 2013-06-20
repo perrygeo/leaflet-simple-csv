@@ -16,7 +16,7 @@ var points = L.geoCsv (null, {
                 layer.bindLabel(feature.properties[clave], {className: 'map-label'});
             }
             if (attr.indexOf('http') === 0) {
-                attr = '<a href="' + attr + '">'+ attr + '</a>';
+                attr = '<a target="_blank" href="' + attr + '">'+ attr + '</a>';
             }
             if (attr) {
                 popup += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
@@ -121,6 +121,7 @@ $(document).ready( function() {
         type:'GET',
         dataType:'text',
         url: dataUrl,
+        contentType: "text/csv; charset=utf-8",
         error: function() {
             alert('Error retrieving csv file');
         },
