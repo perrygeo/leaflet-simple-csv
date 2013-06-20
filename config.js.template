@@ -6,3 +6,4 @@ var baseAttribution = 'Data, imagery and map information provided by <a href="ht
 var subdomains = '1234';
 var clusterOptions = {showCoverageOnHover: false, maxClusterRadius: 50};
 var labelColumn = "Name";
+var opacity = 1.0;
