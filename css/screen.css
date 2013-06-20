@@ -35,3 +35,15 @@ form {
 .map-label {
     z-index: 9000638;
 }
+
+#clear {
+    display: inline-block;
+    position: relative;
+    right: -28px;
+    z-index: 999999;
+    top: 1px;
+}
+
+input.search-query {
+    padding-left: 28px;
+}

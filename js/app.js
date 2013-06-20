@@ -56,6 +56,12 @@ var addCsvMarkers = function() {
     total = 0;
     filterString = document.getElementById('filter-string').value;
 
+    if (filterString) {
+        $("#clear").fadeIn();
+    } else {
+        $("#clear").fadeOut();
+    }
+
     map.removeLayer(markers);
     points.clearLayers();
 
@@ -132,6 +138,12 @@ $(document).ready( function() {
             $('#filter-string').typeahead({source: typeAheadSource});
             addCsvMarkers();
         }
+    });
+
+    $("#clear").click(function(evt){
+        evt.preventDefault();
+        $("#filter-string").val("").focus();
+        addCsvMarkers();
     });
 
 });
