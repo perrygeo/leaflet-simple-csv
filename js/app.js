@@ -4,6 +4,11 @@ var center = new L.LatLng(0, 0);
 
 var map = new L.Map('map', {center: center, zoom: 2, maxZoom: maxZoom, layers: [basemap]});
 
+var popupOpts = {
+    autoPanPadding: new L.Point(5, 50),
+    autoPan: true
+};
+
 var points = L.geoCsv (null, {
     firstLineTitles: true,
     fieldSeparator: fieldSeparator,
@@ -23,7 +28,7 @@ var points = L.geoCsv (null, {
             }
         }
         popup += "</table></popup-content>";
-        layer.bindPopup(popup);
+        layer.bindPopup(popup, popupOpts);
     },
     filter: function(feature, layer) {
         total += 1;
