@@ -12,8 +12,18 @@ Simple Leaflet map template for putting points on a map.
 * Full text filtering with typeahead
 * Completely client-side javascript with all dependencies included or linked via CDN
 
+###
 ### Usage
-Download, add your own data csv, copy the `config.js.template` to `config.js`, edit it according to your needs, then load index.html in a browser.
+Download, copy the template and load index.html in a browser to confirm that everything works
+
+```
+git clone https://github.com/perrygeo/leaflet-simple-csv.git
+cd leaflet-simple-csv
+cp config.js.template config.js
+open index.html
+```
+
+Then modify `config.js` and `data/data.csv` according to your needs.
 
 ### Thanks to...
 
