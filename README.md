@@ -25,6 +25,14 @@ open index.html
 
 Then modify `config.js` and `data/data.csv` according to your needs.
 
+Some browsers do not allow XMLHttpRequests with the `file://` protocol so you'll need to serve it with a web server. For local development, you can use python
+
+```
+$ python -m SimpleHTTPServer
+Serving HTTP on 0.0.0.0 port 8000 ...
+```
+Then navigate to `http://localhost:8000` instead.
+
 ### Thanks to...
 
 * [Leaflet](https://github.com/Leaflet/Leaflet)
